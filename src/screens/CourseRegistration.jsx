@@ -15,7 +15,7 @@ const CourseRegistration = () => {
                         color={'darkblue'}
                     />
                 </TouchableOpacity>
-                <Text style={styles.headerTxt}>Course Registration</Text>
+                <Text style={styles.headerTxt}>Courses Registration</Text>
                 <TouchableOpacity>
                     <AntDesign
                         name='menufold'

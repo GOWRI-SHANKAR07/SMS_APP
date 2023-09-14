@@ -13,6 +13,6 @@ const RegisteredCoureses = () => {
       </View>
     </View>
   )
-}
+} 
 
 export default RegisteredCoureses
