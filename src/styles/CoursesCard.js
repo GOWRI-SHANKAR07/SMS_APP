@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     },
 
     txt: {
-        fontSize: fontPixel(18),
+        fontSize: fontPixel(15),
         color: Colors.black,
         fontFamily: 'Montserrat-Medium'
     }    

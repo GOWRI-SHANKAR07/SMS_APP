@@ -15,13 +15,14 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         padding: pixelSizeVertical(20),
         // borderWidth: 1,
+        marginTop: pixelSizeVertical(10),
         bottom: pixelSizeVertical(10),
     },
 
     headerTxt: {
         color: Colors.black,
         fontSize: fontPixel(23), 
-        fontFamily: 'Montserrat-Bold'
+        fontFamily: 'Montserrat-SemiBold',
     },
 
     androidShadow: {
@@ -56,11 +57,11 @@ const styles = StyleSheet.create({
     },
 
     coursesTxt: {
-        fontSize: fontPixel(20),
+        fontSize: fontPixel(18),
         color: Colors.black,
         padding: pixelSizeHorizontal(15),
         backgroundColor: '#00A1',
-        fontFamily: 'Montserrat-Bold'
+        fontFamily: 'Montserrat-SemiBold'
     },
 
     progressCont: {

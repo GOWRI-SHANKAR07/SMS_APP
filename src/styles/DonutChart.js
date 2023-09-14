@@ -1,4 +1,3 @@
-import { rotate } from "@shopify/react-native-skia";
 import { heightPixel, pixelSizeVertical, widthPixel } from "../Constants/Theme";
 
 const { StyleSheet, PixelRatio } = require("react-native");
