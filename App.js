@@ -8,18 +8,21 @@ import { pixelSizeVertical } from './src/Constants/Theme';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  // loading fonts
   const [fontsLoaded] = useFonts({
     'Montserrat-Medium': require('./src/assets/fonts/Montserrat-Medium.ttf'),
     'Montserrat-Bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
     'Montserrat-SemiBold': require('./src/assets/fonts/Montserrat-SemiBold.ttf'),
   });
 
+  // checking whether the font is loaded to inkoke a func
   useEffect(() => {
     if (fontsLoaded) {
       onLayoutRootView();
     }
   }, [fontsLoaded])
 
+  // conditional layout handling
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
