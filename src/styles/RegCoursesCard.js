@@ -11,15 +11,15 @@ const styles = StyleSheet.create({
 
     outerCont: {
         borderRadius: 5,
-        borderTopRightRadius: 5,
-        borderTopLeftRadius: 5,
         // borderWidth: 1,
-        backgroundColor: Colors.grey
+        backgroundColor: Colors.grey,
+        padding: pixelSizeHorizontal(5)
     },
 
     innerCont: {
         backgroundColor: Colors.grey,
         // borderWidth: 1,
+        borderRadius: 5,
         borderColor: Colors.black,
         flexDirection: "row",
         justifyContent: "space-between",
