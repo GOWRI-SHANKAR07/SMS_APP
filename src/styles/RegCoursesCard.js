@@ -4,13 +4,23 @@ const { StyleSheet } = require("react-native");
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: Colors.white,
+        marginBottom: pixelSizeVertical(10),
+        borderRadius: 5,
+    },
+
+    outerCont: {
+        borderRadius: 5,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
         // borderWidth: 1,
+        backgroundColor: Colors.grey
     },
 
     innerCont: {
-        backgroundColor: Colors.white,
-        borderBottomWidth: 1,
-        borderColor: Colors.grey,
+        backgroundColor: Colors.grey,
+        // borderWidth: 1,
+        borderColor: Colors.black,
         flexDirection: "row",
         justifyContent: "space-between",
         paddingTop: pixelSizeHorizontal(15),
@@ -34,7 +44,8 @@ const styles = StyleSheet.create({
     subTxt: {
         // borderWidth: 1,
         padding: pixelSizeVertical(8),
-        fontFamily: 'Montserrat-Medium'
+        fontFamily: 'Montserrat-Medium',
+        color: Colors.black
     },
 
     innerSub: {
@@ -47,9 +58,11 @@ const styles = StyleSheet.create({
 
     statusCont: {
         // borderWidth: 1, 
+        backgroundColor: Colors.grey,
         flexDirection: 'row',
         justifyContent: "space-between",
-        marginTop: pixelSizeVertical(5)
+        paddingTop: pixelSizeVertical(5),
+        marginBottom: pixelSizeVertical(10),
     },
 
     statusTxt: {
@@ -59,10 +72,10 @@ const styles = StyleSheet.create({
     },
 
     warnIcon: {
-        borderWidth: 1, 
-        height: heightPixel(20), 
-        width: widthPixel(20), 
-        alignSelf: 'center', 
+        borderWidth: 1,
+        height: heightPixel(20),
+        width: widthPixel(20),
+        alignSelf: 'center',
         paddingLeft: pixelSizeHorizontal(1),
         paddingTop: pixelSizeVertical(1),
         borderColor: '#ffffff00'

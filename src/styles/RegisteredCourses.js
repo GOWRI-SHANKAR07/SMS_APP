@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     coursesCont: {
         // borderWidth: 1,
         width: widthPixel(380),
-        top: pixelSizeVertical(10)
+        top: pixelSizeVertical(10),
+        // backgroundColor: Colors.grey,
     },
 
     coursesTxt: {
