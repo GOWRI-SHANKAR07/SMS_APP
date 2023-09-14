@@ -1,38 +1,24 @@
 import React from "react";
-
 import {
     Canvas,
     Path,
-    SkFont,
     Skia,
-    SkiaMutableValue,
-    Text,
-    useComputedValue,
-    useFont,
 } from "@shopify/react-native-skia";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { styles } from "../styles/DonutChart";
-import { Colors } from "../Constants/Theme";
 
 function DonutChart({
     strokeWidth,
     radius,
     percentageComplete,
-    font,
-    targetPercentage,
-    smallerFont,
     descTxt1,
-    descTxt2
 }) {
+    // inner radius of the circle
     const innerRadius = radius - strokeWidth / 2;
-    const targetText = `${targetPercentage * 100}`;
-
+    // creating skia path
     const path = Skia.Path.Make();
+    // creating a circle using the path
     path.addCircle(radius, radius, innerRadius);
-
-    const width = 100;
-    const titleWidth = 50;
-    const start = 0;
 
     return (
         <View style={styles.container}>
@@ -44,7 +30,7 @@ function DonutChart({
                     strokeJoin="round"
                     strokeWidth={strokeWidth}
                     strokeCap="round"
-                    start={start}
+                    start={0}
                     end={percentageComplete}
                 />
             </Canvas>

@@ -1,15 +1,15 @@
 import { View, Text, Platform, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { styles } from '../styles/Academics'
-import { SimpleLineIcons, AntDesign, EvilIcons } from '@expo/vector-icons';
-import { Colors, fontPixel, pixelSizeHorizontal, widthPixel } from '../Constants/Theme'
+import { AntDesign, EvilIcons } from '@expo/vector-icons';
+import { fontPixel, } from '../Constants/Theme'
 import CoursesCard from '../components/CoursesCard'
 import { coursesData } from '../data/Courses'
 import ProgressChart from '../components/ProgressChart';
 
 
 const Academics = () => {
-
+  // progress circle id text
   const descTxt1 = 'CGPA';
   const descTxt2 = 'GPA';
 
