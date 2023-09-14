@@ -12,8 +12,8 @@ export const Colors = {
     black2: '#585858',
     green: '#00e600',
     red: '#cc0000',
-
-    grey: '#F6F4F4',
+ 
+    grey: '#f8f8f8',
     greyDark: '#717070',
     greyBorder: '#939393',
     greyplaceholder: '#A3A3A3',
