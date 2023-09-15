@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         borderTopWidth: 1,
+        // right: pixelSizeHorizontal(50),
         borderTopColor: Colors.greyMessage,
     },
 
