@@ -3,42 +3,27 @@ import React, { useState } from 'react'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { Colors, heightPixel, pixelSizeHorizontal, pixelSizeVertical, widthPixel } from '../Constants/Theme'
 import { styles } from '../styles/RegCoursesCard'
-import Animated, { Easing, withTiming, useSharedValue, useAnimatedStyle, FlipInXUp, FlipOutXDown, SlideInUp, SlideInDown, ZoomIn, ZoomOut, FadeOut, SlideInLeft, SlideInRight } from 'react-native-reanimated';
+import Animated, { Easing, withTiming, useSharedValue, useAnimatedStyle, SlideInLeft, SlideOutLeft } from 'react-native-reanimated';
 
 
 
 const RegCoursesCard = ({ items }) => {
 
     const [open, setOpen] = useState(false);
-    // const animationValue = useSharedValue(0); // Initialize it to 0
+    const [lectureExit, setLectureExit] = useState(false);
+    const [labExit, setLabExit] = useState(false);
 
-    // const containerStyle = useAnimatedStyle(() => {
-    //     return {
-    //         height: animationValue.value, // Apply the animated height
-    //     };
-    // });
+    const toggleOpen = () => {
+        setOpen(!open);
+    };
 
-    // const toggleOpen = () => {
-    //     // Update the animation value based on the open state
-    //     animationValue.value = withTiming(open ? 0 : 80, {
-    //         duration: 300, // Adjust the duration as needed
-    //         easing: Easing.inOut(Easing.ease), // Adjust the easing function as needed
-    //     });
-
-    //     // Toggle the open state
-    //     setOpen(!open);
-    // };
-
-    // const toggleClose = () => {
-    //     // Update the animation value based on the open state
-    //     animationValue.value = withTiming(open ? 20 : 0, {
-    //         duration: 300, // Adjust the duration as needed
-    //         easing: Easing.inOut(Easing.ease) // Adjust the easing function as needed
-    //     });
-
-    //     // Toggle the open state
-    //     setOpen(!open);
-    // };
+    const toggleClose = () => {
+        setLectureExit(true);
+        setLabExit(true);
+        setTimeout(() => {
+            setOpen(!open);
+        }, 1000);
+    };
 
 
     return (
@@ -48,8 +33,11 @@ const RegCoursesCard = ({ items }) => {
                 <TouchableOpacity
                     style={[
                         styles.innerCont,
+                        {
+                            // height: open ? heightPixel(170) : 'auto'
+                        }
                     ]}
-                    onPress={() => open ? setOpen(false) : setOpen(true)}
+                    onPress={() => open ? toggleClose() : toggleOpen()}
                 >
                     <View>
                         <Text style={styles.txt}>{items.code}</Text>
@@ -70,13 +58,13 @@ const RegCoursesCard = ({ items }) => {
                     }
                 </TouchableOpacity>
                 {open ?
-                    <Animated.View
-                        entering={SlideInUp}
-                        exiting={SlideInDown.duration(30)}
-                        style={styles.detailsCont}
-                    >
+                    <View style={[styles.detailsCont,]}>
                         <View style={styles.subCont}>
-                            <View style={styles.innerSub}>
+                            <Animated.View
+                                style={[styles.innerSub]}
+                                entering={open && SlideInLeft.duration(500)}
+                                exiting={lectureExit && SlideOutLeft.duration(500)}
+                            >
                                 <Text style={styles.subTxt}>{items.lecture}</Text>
                                 {items.lectureCompleted ?
                                     ''
@@ -88,8 +76,12 @@ const RegCoursesCard = ({ items }) => {
                                         style={styles.warnIcon}
                                     />
                                 }
-                            </View>
-                            <View style={styles.innerSub}>
+                            </Animated.View>
+                            <Animated.View
+                                style={[styles.innerSub]}
+                                entering={open && SlideInLeft.duration(700)}
+                                exiting={labExit && SlideOutLeft.duration(700)}
+                            >
                                 <Text style={styles.subTxt}>{items.lab}</Text>
                                 {items.labCompleted ?
                                     ''
@@ -101,9 +93,9 @@ const RegCoursesCard = ({ items }) => {
                                         style={styles.warnIcon}
                                     />
                                 }
-                            </View>
+                            </Animated.View>
                         </View>
-                    </Animated.View>
+                    </View>
                     :
                     ''
                 }
