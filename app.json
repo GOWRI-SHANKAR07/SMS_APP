@@ -16,9 +16,9 @@
     ],
     "extra": {
       "fontAssets": [
-        "./src/assets/fonts/Roboto-Medium.ttf",
-        "./src/assets/fonts/Roboto-Bold.ttf",
-        "./src/assets/fonts/Roboto-SemiBold.ttf"
+        "./src/assets/fonts/Montserrat-Medium.ttf",
+        "./src/assets/fonts/Montserrat-Bold.ttf",
+        "./src/assets/fonts/Montserrat-SemiBold.ttf"
       ]
     },
     "ios": {
