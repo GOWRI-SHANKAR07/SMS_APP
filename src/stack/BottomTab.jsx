@@ -5,6 +5,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { Colors, fontPixel, widthPixel } from '../Constants/Theme';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import Academics from '../screens/Academics';
+import CourseRegistration from '../screens/CourseRegistration';
 
 // creating Bottom Tab
 const Tab = createMaterialBottomTabNavigator();
@@ -64,7 +65,7 @@ const BottomTab = () => {
             initialRouteName='Academics'
         >
             <Tab.Screen name='Home' component={Home} />
-            <Tab.Screen name='Academics' component={Academics} />
+            <Tab.Screen name='Academics' component={CourseRegistration} />
             <Tab.Screen name='Schedules' component={Schedules} />
             <Tab.Screen name='Accounts' component={Accounts} />
         </Tab.Navigator >
