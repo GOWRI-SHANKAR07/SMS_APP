@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { Colors, heightPixel, pixelSizeHorizontal, pixelSizeVertical, widthPixel } from '../Constants/Theme'
 import { styles } from '../styles/RegCoursesCard'
-import Animated, { Easing, withTiming, useSharedValue, useAnimatedStyle, SlideInLeft, SlideOutLeft } from 'react-native-reanimated';
+import Animated, { Easing, withTiming, useSharedValue, useAnimatedStyle, SlideInLeft, SlideOutLeft, Layout } from 'react-native-reanimated';
 
 
 
@@ -19,12 +19,18 @@ const RegCoursesCard = ({ items }) => {
 
     const toggleClose = () => {
         setLectureExit(true);
+        setLectureExit(true);
         setLabExit(true);
         setTimeout(() => {
-            setOpen(!open);
+            setOpen(false);
+            setLectureExit(false);
+            setLabExit(false);
         }, 1000);
     };
 
+    console.log(lectureExit, " lecture");
+    console.log(labExit, " Lab");
+    console.log(open, "Open");
 
     return (
         <View style={styles.container}>
@@ -62,6 +68,7 @@ const RegCoursesCard = ({ items }) => {
                         <View style={styles.subCont}>
                             <Animated.View
                                 style={[styles.innerSub]}
+                                layout={Layout.springify()}
                                 entering={open && SlideInLeft.duration(500)}
                                 exiting={lectureExit && SlideOutLeft.duration(500)}
                             >
@@ -79,6 +86,7 @@ const RegCoursesCard = ({ items }) => {
                             </Animated.View>
                             <Animated.View
                                 style={[styles.innerSub]}
+                                layout={Layout.springify()}
                                 entering={open && SlideInLeft.duration(700)}
                                 exiting={labExit && SlideOutLeft.duration(700)}
                             >
