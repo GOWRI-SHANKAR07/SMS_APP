@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         // borderWidth: 1,
         backgroundColor: Colors.grey,
-        padding: pixelSizeHorizontal(5)
+        padding: pixelSizeHorizontal(5),
     },
 
     innerCont: {
@@ -52,12 +52,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: "space-between",
         alignItems: "center",
-        borderBottomWidth: 2,
-        borderBottomColor: Colors.grey,
+        borderTopWidth: 1,
+        borderTopColor: Colors.greyMessage,
     },
 
     statusCont: {
-        // borderWidth: 1, 
+        borderTopWidth: 1,
+        borderTopColor: Colors.greyMessage,
         backgroundColor: Colors.grey,
         flexDirection: 'row',
         justifyContent: "space-between",

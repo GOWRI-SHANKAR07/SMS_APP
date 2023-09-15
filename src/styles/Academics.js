@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         padding: pixelSizeVertical(20),
-        // borderWidth: 1,
+        borderWidth: 1,
+        borderColor: '#ffffff00',
         bottom: pixelSizeVertical(10),
     },
 
