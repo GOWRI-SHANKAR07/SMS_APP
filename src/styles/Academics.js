@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ffffff00',
         bottom: pixelSizeVertical(10),
+        marginTop: pixelSizeVertical(10)
     },
 
     headerTxt: {
