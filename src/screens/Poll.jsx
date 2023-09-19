@@ -10,13 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 import Animated, { SlideInLeft } from 'react-native-reanimated';
 
 
-
-
-const Poll = ({ setPollOpen }) => {
+const Poll = ({ }) => {
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['Option 1 *', 'Option 2 *',]);
     const [inputValues, setInputValues] = useState({});
     const [characCount, setCharacCount] = useState(0);
+    const [animate, setAnimate] = useState(false)
 
     const navigation = useNavigation();
 
@@ -26,6 +25,7 @@ const Poll = ({ setPollOpen }) => {
             alert('You can only add up to 5 items.');
             return; // Do not add a new item if the limit is reached
         }
+        setAnimate(true);
         // Create a new item (e.g., 'Option X', where X is the next number)
         const newOption = `Option ${options.length + 1} *`;
 
@@ -43,7 +43,7 @@ const Poll = ({ setPollOpen }) => {
     const handleSave = () => {
         setInputValues({ ...inputValues, ['Question']: question });
         setPollOpen(false);
-        navigation.navigate('Academics', { inputValues });  
+        navigation.navigate('Academics', { inputValues });
     }
 
     return (
@@ -62,42 +62,37 @@ const Poll = ({ setPollOpen }) => {
                 <View style={styles.inpCont}>
                     <View style={styles.innerCont}>
                         <View style={styles.inpTxtCont}>
-                            <Animated.Text
+                            <Text
                                 style={styles.titleTxt}
-                                entering={SlideInLeft}
                             >
                                 Your questions *
-                            </Animated.Text>
-                            <Animated.View
-                                entering={SlideInLeft.duration(500)}
-                            >
-                                <TextInputBox
-                                    maxLength={140}
-                                    placeholder={'Add question'}
-                                    height={150}
-                                    multiline={true}
-                                    align={'top'}
-                                    value={question}
-                                    onChangeText={e => setQuestion(e)}
-                                />
-                            </Animated.View>
-                            <Animated.Text
+                            </Text>
+                            <TextInputBox
+                                maxLength={140}
+                                placeholder={'Add question'}
+                                height={150}
+                                multiline={true}
+                                align={'top'}
+                                value={question}
+                                onChangeText={e => setQuestion(e)}
+                            />
+                            <Text
                                 style={styles.charactersTxt}
-                                entering={SlideInLeft.duration(700)}
                             >
                                 Charater left : {question.length}/140
-                            </Animated.Text>
+                            </Text>
                         </View>
                         {options.map(item =>
                             <>
                                 <AddOption
+                                    animate={animate}
                                     key={item}
                                     items={item}
                                     onChangeText={(text) => handleInputChange(item, text)}
                                 />
                                 <Animated.Text
                                     style={styles.charactersTxt}
-                                    entering={SlideInLeft.duration(700)}
+                                    entering={animate ? SlideInLeft.duration(700) : ''}
                                 >
                                     Charater left : {characCount}/140
                                 </Animated.Text>
