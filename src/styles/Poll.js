@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
     titleTxt: {
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: fontPixel(18)
+        fontSize: fontPixel(16)
     },
 
     inpTxtCont: {
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     charactersTxt: {
         marginTop: pixelSizeVertical(10),
         color: Colors.greyplaceholder,
-        fontFamily: 'Montserrat-Medium'  
+        fontFamily: 'Montserrat-Medium'  ,
+        fontSize: fontPixel(14)
     },
 
     addCont: {

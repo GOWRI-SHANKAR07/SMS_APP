@@ -1,4 +1,4 @@
-import { Colors, heightPixel, pixelSizeHorizontal, pixelSizeVertical } from "../Constants/Theme";
+import { Colors, fontPixel, heightPixel, pixelSizeHorizontal, pixelSizeVertical } from "../Constants/Theme";
 
 const { StyleSheet } = require("react-native");
 
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'flex-start',
         fontFamily: 'Montserrat-Medium',
+        fontSize: fontPixel(14),
         paddingLeft: pixelSizeHorizontal(10),
     }
 })
