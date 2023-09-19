@@ -6,13 +6,19 @@ import TextInputBox from '../components/TextInputBox';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors, } from '../Constants/Theme';
 import AddOption from '../components/AddOption';
+import { useNavigation } from '@react-navigation/native';
+import Animated, { SlideInLeft } from 'react-native-reanimated';
 
 
 
-const Poll = () => {
+
+const Poll = ({ setPollOpen }) => {
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['Option 1 *', 'Option 2 *',]);
     const [inputValues, setInputValues] = useState({});
+    const [characCount, setCharacCount] = useState(0);
+
+    const navigation = useNavigation();
 
     // handle add option
     const handleAddOption = () => {
@@ -30,13 +36,15 @@ const Poll = () => {
     // store input changes to object 
     const handleInputChange = (key, value) => {
         setInputValues({ ...inputValues, [key]: value });
+        setCharacCount(value.length)
     };
 
     // Saving all the user inputs
     const handleSave = () => {
-        setInputValues({...inputValues, ['Question']: question});
+        setInputValues({ ...inputValues, ['Question']: question });
+        setPollOpen(false);
+        navigation.navigate('Academics', { inputValues });  
     }
-
 
     return (
         <View style={styles.container}>
@@ -54,24 +62,46 @@ const Poll = () => {
                 <View style={styles.inpCont}>
                     <View style={styles.innerCont}>
                         <View style={styles.inpTxtCont}>
-                            <Text style={styles.titleTxt}>Your questions *</Text>
-                            <TextInputBox
-                                maxLength={140}
-                                placeholder={'Add question'}
-                                height={150}
-                                multiline={true}
-                                align={'top'}
-                                value={question}
-                                onChangeText={e => setQuestion(e)}
-                            />
-                            <Text style={styles.charactersTxt}>Charater left : {question.length}/140</Text>
+                            <Animated.Text
+                                style={styles.titleTxt}
+                                entering={SlideInLeft}
+                            >
+                                Your questions *
+                            </Animated.Text>
+                            <Animated.View
+                                entering={SlideInLeft.duration(500)}
+                            >
+                                <TextInputBox
+                                    maxLength={140}
+                                    placeholder={'Add question'}
+                                    height={150}
+                                    multiline={true}
+                                    align={'top'}
+                                    value={question}
+                                    onChangeText={e => setQuestion(e)}
+                                />
+                            </Animated.View>
+                            <Animated.Text
+                                style={styles.charactersTxt}
+                                entering={SlideInLeft.duration(700)}
+                            >
+                                Charater left : {question.length}/140
+                            </Animated.Text>
                         </View>
                         {options.map(item =>
-                            <AddOption
-                                key={item}
-                                items={item}
-                                onChangeText={(text) => handleInputChange(item, text)}
-                            />
+                            <>
+                                <AddOption
+                                    key={item}
+                                    items={item}
+                                    onChangeText={(text) => handleInputChange(item, text)}
+                                />
+                                <Animated.Text
+                                    style={styles.charactersTxt}
+                                    entering={SlideInLeft.duration(700)}
+                                >
+                                    Charater left : {characCount}/140
+                                </Animated.Text>
+                            </>
                         )}
                         <View>
                             <TouchableOpacity
