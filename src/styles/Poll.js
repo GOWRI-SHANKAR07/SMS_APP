@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
         fontSize: fontPixel(18),
         textAlign: "center",
         color: Colors.white
+    },
+
+    titleCont: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
 
 })
