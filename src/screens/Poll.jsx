@@ -7,14 +7,16 @@ import { AntDesign } from '@expo/vector-icons';
 import { Colors, } from '../Constants/Theme';
 import AddOption from '../components/AddOption';
 import Animated, { SlideInLeft } from 'react-native-reanimated';
+import { useAppContext } from '../context/AppContext';
 
 
 const Poll = ({ }) => {
     const [question, setQuestion] = useState('');
-    const [options, setOptions] = useState(['Option 1 *', 'Option 2 *',]);
     const [inputValues, setInputValues] = useState({});
     const [characCount, setCharacCount] = useState(0);
-    const [animate, setAnimate] = useState(false)
+    const [animate, setAnimate] = useState(false);
+
+    const { options, setOptions } = useAppContext();
 
 
     // handle add option
@@ -40,9 +42,9 @@ const Poll = ({ }) => {
     // Saving all the user inputs
     const handleSave = () => {
         setInputValues({ ...inputValues, ['Question']: question });
-        setPollOpen(false);
-        navigation.navigate('Academics', { inputValues });
     }
+
+    console.log(options);
 
     return (
         <View style={styles.container}>
