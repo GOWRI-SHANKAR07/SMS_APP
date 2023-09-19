@@ -61,7 +61,7 @@ const BottomTab = () => {
                     );
                 }
             })}
-            initialRouteName='Academics'
+            initialRouteName='Home'
         >
             <Tab.Screen name='Home' component={Home} />
             <Tab.Screen name='Academics' component={Academics} />

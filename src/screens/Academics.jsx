@@ -50,7 +50,7 @@ const Academics = () => {
             </View>
             <View style={styles.desTxt2}>
               <Text style={{ fontSize: fontPixel(20), fontFamily: 'Montserrat-Medium', }}>
-                {descTxt1}
+                {descTxt2}
               </Text>
               <Text style={{fontFamily: 'Montserrat-Medium',}}>7.94</Text>
             </View>
