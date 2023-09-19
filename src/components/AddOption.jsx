@@ -3,27 +3,31 @@ import React from 'react'
 import { styles } from '../styles/Poll'
 import { pixelSizeVertical } from '../Constants/Theme'
 import TextInputBox from './TextInputBox'
+import Animated, { SlideInLeft } from 'react-native-reanimated'
 
-const AddOption = ({items, value, onChangeText}) => {
+const AddOption = ({ items, value, onChangeText }) => {
     return (
-        <View style={
-            [
-                styles.inpTxtCont,
-                {
-                    marginTop: pixelSizeVertical(10)
-                }
-            ]
-        }
+        <View
+            style={
+                [
+                    styles.inpTxtCont,
+                    {
+                        marginTop: pixelSizeVertical(10)
+                    }
+                ]  
+            }
+
         >
-            <Text style={styles.titleTxt}>{items}</Text>
-            <TextInputBox
-                maxLength={140}
-                placeholder={'Add option'}
-                height={50}
-                value={value}
-                onChangeText={onChangeText}
-            />
-            <Text style={styles.charactersTxt}>Charater left : 0/140</Text>
+            <Animated.Text style={styles.titleTxt} entering={SlideInLeft}>{items}</Animated.Text>
+            <Animated.View entering={SlideInLeft.duration(500)}>
+                <TextInputBox
+                    maxLength={140}
+                    placeholder={'Add option'}
+                    height={50}
+                    value={value}
+                    onChangeText={onChangeText}
+                />
+            </Animated.View>
         </View>
     )
 }
