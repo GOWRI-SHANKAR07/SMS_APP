@@ -5,7 +5,7 @@ import { pixelSizeVertical } from '../Constants/Theme'
 import TextInputBox from './TextInputBox'
 import Animated, { SlideInLeft } from 'react-native-reanimated'
 
-const AddOption = ({ items, value, onChangeText }) => {
+const AddOption = ({ items, value, onChangeText, animate }) => {
     return (
         <View
             style={
@@ -14,12 +14,11 @@ const AddOption = ({ items, value, onChangeText }) => {
                     {
                         marginTop: pixelSizeVertical(10)
                     }
-                ]  
+                ]
             }
-
         >
-            <Animated.Text style={styles.titleTxt} entering={SlideInLeft}>{items}</Animated.Text>
-            <Animated.View entering={SlideInLeft.duration(500)}>
+            <Animated.Text style={styles.titleTxt} entering={animate ? SlideInLeft : ''}>{items}</Animated.Text>
+            <Animated.View entering={animate ? SlideInLeft.duration(500) : ''}>
                 <TextInputBox
                     maxLength={140}
                     placeholder={'Add option'}
