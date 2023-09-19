@@ -6,7 +6,6 @@ import TextInputBox from '../components/TextInputBox';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors, } from '../Constants/Theme';
 import AddOption from '../components/AddOption';
-import { useNavigation } from '@react-navigation/native';
 import Animated, { SlideInLeft } from 'react-native-reanimated';
 
 
@@ -17,7 +16,6 @@ const Poll = ({ }) => {
     const [characCount, setCharacCount] = useState(0);
     const [animate, setAnimate] = useState(false)
 
-    const navigation = useNavigation();
 
     // handle add option
     const handleAddOption = () => {
