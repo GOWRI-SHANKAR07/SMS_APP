@@ -3,13 +3,12 @@ import React from 'react'
 import { styles } from '../styles/Poll'
 import { Colors, pixelSizeVertical } from '../Constants/Theme'
 import TextInputBox from './TextInputBox'
-import Animated, { SlideInLeft, SlideOutLeft } from 'react-native-reanimated'
+import Animated, { SlideInLeft, } from 'react-native-reanimated'
 import { useAppContext } from '../context/AppContext'
 
-const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, containerLeftStyle1, index, removal }) => {
+const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, }) => {
 
     const { options } = useAppContext();
-    console.log(value);
 
     return (
         <View

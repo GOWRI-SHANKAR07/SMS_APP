@@ -19,6 +19,7 @@ const Poll = ({ }) => {
     const [totalOptions, setTotalOptions] = useState(2);
     const [optionTextValues, setOptionTextValues] = useState({});
 
+    // handling removing options
     const handleRemoveOption = (removedItem) => {
         // Find the index of the removed option
         const removedIndex = options.indexOf(removedItem);
@@ -45,10 +46,6 @@ const Poll = ({ }) => {
         }
       };
       
-
-    console.log(optionTextValues, 'ppp');
-    // console.log(inputValues, "ipp");
-    // console.log(options, 'op');
 
     // handle add option
     const handleAddOption = () => {
