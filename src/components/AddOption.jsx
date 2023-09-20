@@ -6,17 +6,9 @@ import TextInputBox from './TextInputBox'
 import Animated, { SlideInLeft } from 'react-native-reanimated'
 import { useAppContext } from '../context/AppContext'
 
-const AddOption = ({ items, value, onChangeText, animate, }) => {
+const AddOption = ({ items, value, onChangeText, animate, onRemoveOption }) => {
 
-    const { options, setOptions } = useAppContext();
-
-    const handleRemoveOption = (items) => {
-        const index = options.indexOf(items);
-        options.splice(index, 1);
-        console.log(options);
-    }
-
-
+    const { options } = useAppContext();
 
     return (
         <View
@@ -38,7 +30,7 @@ const AddOption = ({ items, value, onChangeText, animate, }) => {
                 </Animated.Text>
                 {options.indexOf(items) !== 0 &&  options.indexOf(items) !== 1  ?
                     <TouchableOpacity
-                        onPress={() => handleRemoveOption(items)}
+                        onPress={() => onRemoveOption(items)}
                     >
                         <Animated.Text
                             style={[styles.titleTxt, { color: Colors.primary }]}
