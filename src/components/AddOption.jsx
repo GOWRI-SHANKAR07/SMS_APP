@@ -3,12 +3,15 @@ import React from 'react'
 import { styles } from '../styles/Poll'
 import { Colors, pixelSizeVertical } from '../Constants/Theme'
 import TextInputBox from './TextInputBox'
-import Animated, { SlideInLeft } from 'react-native-reanimated'
+import Animated, { SlideInLeft, SlideOutLeft } from 'react-native-reanimated'
 import { useAppContext } from '../context/AppContext'
 
-const AddOption = ({ items, value, onChangeText, animate, onRemoveOption }) => {
+const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, containerLeftStyle1, index, removal }) => {
 
     const { options } = useAppContext();
+
+    isRemoving = options.indexOf(items) !== 0 &&  options.indexOf(items) !== 1 && options.indexOf(removal) === index;
+
 
     return (
         <View
@@ -23,8 +26,9 @@ const AddOption = ({ items, value, onChangeText, animate, onRemoveOption }) => {
         >
             <View style={styles.titleCont}>
                 <Animated.Text
-                    style={styles.titleTxt}
-                    entering={animate ? SlideInLeft : ''}
+                    style={[styles.titleTxt, isRemoving ? containerLeftStyle1 : '']}
+                    // entering={animate ? SlideInLeft : ''}
+                    // exiting={animate ? SlideOutLeft : ''}
                 >
                     {items}
                 </Animated.Text>
@@ -33,8 +37,8 @@ const AddOption = ({ items, value, onChangeText, animate, onRemoveOption }) => {
                         onPress={() => onRemoveOption(items)}
                     >
                         <Animated.Text
-                            style={[styles.titleTxt, { color: Colors.primary }]}
-                            entering={animate ? SlideInLeft : ''}
+                            style={[styles.titleTxt, isRemoving ? containerLeftStyle1 : '', { color: Colors.primary }]}
+                            // entering={animate ? SlideInLeft : ''}
                         >
                             Remove
                         </Animated.Text>
@@ -44,7 +48,10 @@ const AddOption = ({ items, value, onChangeText, animate, onRemoveOption }) => {
                 }
 
             </View>
-            <Animated.View entering={animate ? SlideInLeft.duration(500) : ''}>
+            <Animated.View
+            style={[isRemoving ? containerLeftStyle1 : '']} 
+            // entering={animate ? SlideInLeft.duration(500) : ''}
+            >
                 <TextInputBox
                     maxLength={140}
                     placeholder={'Add option'}
