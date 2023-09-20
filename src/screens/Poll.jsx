@@ -6,7 +6,7 @@ import TextInputBox from '../components/TextInputBox';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors, } from '../Constants/Theme';
 import AddOption from '../components/AddOption';
-import Animated, { SlideInLeft } from 'react-native-reanimated';
+import Animated, { Easing, SlideInLeft, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useAppContext } from '../context/AppContext';
 
 
@@ -15,13 +15,86 @@ const Poll = ({ }) => {
     const [inputValues, setInputValues] = useState({});
     const [characCount, setCharacCount] = useState(0);
     const [animate, setAnimate] = useState(false);
+    const [removal, setRemoval] = useState();
+    const [index, setIndex] = useState();
 
     const { options, setOptions } = useAppContext();
 
+    // animation starting point
+    const animatedValueLeft1 = useSharedValue(-50);
+    const animatedValueLeft2 = useSharedValue(-70);
+
+    // checking to start the removal animation
+    isRemoving = options.indexOf(removal) === index;
+
+
+    // handling lecture content sliding from left
+    const slideInFromLeft1 = () => {
+        animatedValueLeft1.value = withTiming(options ? 0 : 60, {
+            duration: 200, // Adjust the duration as needed
+            easing: Easing.inOut(Easing.linear),
+        });
+    };
+
+    // handling lab content sliding from left
+    const slideInFromLeft2 = () => {
+        animatedValueLeft2.value = withTiming(options ? 0 : 60, {
+            duration: 500, // Adjust the duration as needed
+            easing: Easing.inOut(Easing.linear),
+        });
+    };
+
+    // handling lecture content sliding into left
+    const slideInToLeft1 = () => {
+        animatedValueLeft1.value = withTiming(options ? -380 : 0, {
+            duration: 500, // Adjust the duration as needed
+            easing: Easing.inOut(Easing.linear),
+        });
+    };
+
+    // handling lab content sliding into left
+    const slideInToLeft2 = () => {
+        animatedValueLeft2.value = withTiming(options ? -380 : 0, {
+            duration: 200, // Adjust the duration as needed
+            easing: Easing.inOut(Easing.linear),
+        });
+    };
+
+    // lecture container style for animation
+    const containerLeftStyle1 = useAnimatedStyle(() => {
+
+        return {
+            transform: [{ translateX: animatedValueLeft1.value }],
+        };
+    });
+
+    // lab container style for animation
+    const containerLeftStyle2 = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: animatedValueLeft2.value }],
+        };
+    });
+
     const handleRemoveOption = (removedItem) => {
         const updatedOptions = options.filter((item) => item !== removedItem);
-        setOptions(updatedOptions);
+        const removed = options.indexOf(removedItem);
+        setRemoval(removedItem);
+        setIndex(removed)
+        options.map(item => {
+            if (options.indexOf(removal) === options.indexOf(item)) {
+                slideInToLeft1();
+                slideInToLeft2();
+            }
+        }
+        )
+
+        setTimeout(() => {
+            setOptions(updatedOptions);
+        }, 800);
     };
+
+    console.log(index, "Removed index");
+    console.log(options.indexOf(removal), "arr");
 
     // handle add option
     const handleAddOption = () => {
@@ -32,6 +105,9 @@ const Poll = ({ }) => {
         setAnimate(true);
         // Create a new item (e.g., 'Option X', where X is the next number)
         const newOption = `Option ${options.length + 1} *`;
+
+        slideInFromLeft1();
+        slideInFromLeft2();
 
         // Update the items array with the new item
         setOptions([...options, newOption]);
@@ -94,10 +170,18 @@ const Poll = ({ }) => {
                                     items={item}
                                     onChangeText={(text) => handleInputChange(item, text)}
                                     onRemoveOption={handleRemoveOption}
+                                    containerLeftStyle1={containerLeftStyle1}
+                                    removal={removal}
+                                    index={index}
                                 />
                                 <Animated.Text
-                                    style={styles.charactersTxt}
-                                    entering={animate ? SlideInLeft.duration(700) : ''}
+                                    style={[
+                                        styles.charactersTxt,
+                                        options.indexOf(item) !== 0 && options.indexOf(item) !== 1 && isRemoving
+                                            ? containerLeftStyle2
+                                            : ''
+                                    ]}
+                                // entering={animate ? SlideInLeft.duration(700) : ''}
                                 >
                                     Charater left : {characCount}/140
                                 </Animated.Text>
