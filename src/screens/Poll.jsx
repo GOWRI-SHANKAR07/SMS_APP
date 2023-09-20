@@ -18,6 +18,10 @@ const Poll = ({ }) => {
 
     const { options, setOptions } = useAppContext();
 
+    const handleRemoveOption = (removedItem) => {
+        const updatedOptions = options.filter((item) => item !== removedItem);
+        setOptions(updatedOptions);
+    };
 
     // handle add option
     const handleAddOption = () => {
@@ -89,6 +93,7 @@ const Poll = ({ }) => {
                                     key={item}
                                     items={item}
                                     onChangeText={(text) => handleInputChange(item, text)}
+                                    onRemoveOption={handleRemoveOption}
                                 />
                                 <Animated.Text
                                     style={styles.charactersTxt}
