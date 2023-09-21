@@ -9,10 +9,11 @@ export const useAppContext = () => {
 
 const ContextProvider = ({ children }) => {
   const [options, setOptions] = useState(['Option 1 *', 'Option 2 *',]);
+  const [animation, setAnimation] = useState('');
 
   const pollOptions = useMemo(() => {
-    return { options, setOptions };
-  }, [options])
+    return { options, setOptions, animation, setAnimation };
+  }, [options, animation])
 
   return (
     <AppContext.Provider value={pollOptions}>

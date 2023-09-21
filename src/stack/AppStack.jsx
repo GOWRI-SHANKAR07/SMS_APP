@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTab from './BottomTab';
 import ContextProvider from '../context/AppContext';
+import ProgressBar from '../components/ProgressBar';
 
 // App Stack creation
 const Stack = createNativeStackNavigator();
@@ -15,7 +16,7 @@ export default function AppStack() {
                         headerShown: false
                     }}
                 >
-                    <Stack.Screen name='Homes' component={BottomTab} />
+                    <Stack.Screen name='Poll' component={ProgressBar} />
                 </Stack.Navigator>
             </NavigationContainer>
         </ContextProvider>
