@@ -1,18 +1,16 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { styles } from '../styles/Poll'
 import { EvilIcons } from '@expo/vector-icons';
 import TextInputBox from '../components/TextInputBox';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors, } from '../Constants/Theme';
 import AddOption from '../components/AddOption';
-import Animated, { Easing, SlideInLeft, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useAppContext } from '../context/AppContext';
 
 const Poll = ({ }) => {
     const [question, setQuestion] = useState('');
     const [inputValues, setInputValues] = useState({});
-    const [characCount, setCharacCount] = useState(0);
     const [animate, setAnimate] = useState(false);
 
     const { options, setOptions } = useAppContext();
@@ -20,35 +18,38 @@ const Poll = ({ }) => {
     const [optionTextValues, setOptionTextValues] = useState({});
 
     // handling removing options
-    const handleRemoveOption = (removedItem) => {
+    const handleRemoveOption = useCallback((removedItem) => {
         // Find the index of the removed option
         const removedIndex = options.indexOf(removedItem);
-      
-        if (removedIndex !== -1 && removedIndex < totalOptions - 1) {
-          // Create a copy of the current options and optionTextValues
-          const updatedOptions = [...options];
-          const updatedOptionTextValues = { ...optionTextValues };
-      
-          // Replace the content of the removed option with the content of the next option
-          const removedLabel = updatedOptions[removedIndex];
-          const nextLabel = updatedOptions[removedIndex + 1];
-      
-          updatedOptionTextValues[removedLabel] = optionTextValues[nextLabel];
-      
-          // Remove the next option from the options list and optionTextValues
-          updatedOptions.splice(removedIndex + 1, 1);
-          delete updatedOptionTextValues[nextLabel];
-      
-          // Update the state with the new options and values
-          setOptions(updatedOptions);
-          setOptionTextValues(updatedOptionTextValues);
-          setTotalOptions(totalOptions - 1);
+
+        if (removedIndex !== -1) {
+            // Create a copy of the options array excluding the removed option
+            const updatedOptions = options.filter((_, index) => index !== removedIndex);
+
+            // Create a copy of the optionTextValues object excluding the removed option
+            const updatedOptionTextValues = { ...optionTextValues };
+            delete updatedOptionTextValues[removedItem];
+
+            // Update the labels for the remaining options
+            const updatedLabels = updatedOptions.map((_, index) => `Option ${index + 1} *`);
+
+            // Create a new object to store the text input values for the remaining options
+            const updatedTextValues = {};
+
+            // Update the text input values for the remaining options
+            updatedOptions.forEach((option, index) => {
+                updatedTextValues[`Option ${index + 1} *`] = optionTextValues[option];
+            });
+
+            // Update the state with the new labels, text input values, and totalOptions count
+            setOptions(updatedLabels);
+            setOptionTextValues(updatedTextValues);
+            setTotalOptions(totalOptions - 1);
         }
-      };
-      
+    }, [options, optionTextValues, setOptions, setOptionTextValues, totalOptions]);
 
     // handle add option
-    const handleAddOption = () => {
+    const handleAddOption = useCallback(() => {
         if (totalOptions >= 5) {
             alert('You can only add up to 5 items.');
             return;
@@ -62,28 +63,37 @@ const Poll = ({ }) => {
         setTotalOptions(totalOptions + 1);
 
         // Add an empty text input value for the new option
-        setOptionTextValues({
-            ...optionTextValues,
+        setOptionTextValues((prevValues) => ({
+            ...prevValues,
             [newOptionLabel]: '',
-        });
-    };
+        }));
+    }, [totalOptions, options, setOptions]);
 
     // store input changes to object 
-    const handleInputChange = (key, value) => {
-        setInputValues({ ...inputValues, [key]: value });
-        setCharacCount(value.length);
+    const handleInputChange = useCallback((key, value) => {
+        setInputValues((prevValues) => ({ ...prevValues, [key]: value }));
 
         // Update the text input value in the state
-        setOptionTextValues({
-            ...optionTextValues,
+        setOptionTextValues((prevValues) => ({
+            ...prevValues,
             [key]: value,
-        });
-    };
+        }));
+    }, []);
 
     // Saving all the user inputs
-    const handleSave = () => {
-        setInputValues({ ...inputValues, ['Question']: question });
-    }
+    const handleSave = useCallback(() => {
+        const allInputValues = {
+            Question: question, // Store the question with the key "Question"
+        };
+
+        // Store the option values with their respective keys
+        options.forEach((option, index) => {
+            allInputValues[`Option ${index + 1} *`] = optionTextValues[option];
+        });
+
+        // Now allInputValues will contain all the values with proper keys
+        setInputValues(allInputValues);
+    }, [question, options, optionTextValues]);
 
     return (
         <View style={styles.container}>
@@ -122,14 +132,16 @@ const Poll = ({ }) => {
                             </Text>
                         </View>
                         {options.map((item, index) => (
-                            <AddOption
-                                animate={animate}
-                                key={item}
-                                items={item}
-                                value={optionTextValues[item]}
-                                onChangeText={(text) => handleInputChange(item, text)}
-                                onRemoveOption={handleRemoveOption}
-                            />
+                            <>
+                                <AddOption
+                                    animate={animate}
+                                    key={item}
+                                    items={item}
+                                    value={optionTextValues[item]}
+                                    onChangeText={(text) => handleInputChange(item, text)}
+                                    onRemoveOption={handleRemoveOption}
+                                />
+                            </>
                         ))}
                         <View>
                             <TouchableOpacity

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styles } from '../styles/Poll'
 import { Colors, pixelSizeVertical } from '../Constants/Theme'
 import TextInputBox from './TextInputBox'
@@ -7,6 +7,14 @@ import Animated, { SlideInLeft, } from 'react-native-reanimated'
 import { useAppContext } from '../context/AppContext'
 
 const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, }) => {
+
+    const [characCount, setCharacCount] = useState(value ? value.length : 0);
+
+    // Update the character count when the value changes
+    useEffect(() => {
+        setCharacCount(value ? value.length : 0);
+    }, [value]);
+
 
     const { options } = useAppContext();
 
@@ -28,7 +36,7 @@ const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, }) => 
                 >
                     {items}
                 </Animated.Text>
-                {options.indexOf(items) !== 0 &&  options.indexOf(items) !== 1  ?
+                {options.indexOf(items) !== 0 && options.indexOf(items) !== 1 ?
                     <TouchableOpacity
                         onPress={() => onRemoveOption(items)}
                     >
@@ -44,8 +52,8 @@ const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, }) => 
                 }
 
             </View>
-            <Animated.View 
-            entering={animate ? SlideInLeft.duration(500) : ''}
+            <Animated.View
+                entering={animate ? SlideInLeft.duration(500) : ''}
             >
                 <TextInputBox
                     maxLength={140}
@@ -55,6 +63,12 @@ const AddOption = ({ items, value, onChangeText, animate, onRemoveOption, }) => 
                     onChangeText={onChangeText}
                 />
             </Animated.View>
+            <Animated.Text
+                style={styles.charactersTxt}
+                entering={animate ? SlideInLeft.duration(700) : ''}
+            >
+                Charater left : {characCount}/140
+            </Animated.Text>
         </View>
     )
 }
