@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors, heightPixel, pixelSizeVertical } from '../Constants/Theme';
+import { Colors, heightPixel, pixelSizeHorizontal, pixelSizeVertical } from '../Constants/Theme';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withSpring, withTiming, SlideInLeft } from 'react-native-reanimated';
 import { styles } from '../styles/ProgressBar';
 import { Ionicons } from '@expo/vector-icons';
@@ -50,44 +50,55 @@ const ProgressBar = ({ item, isSelected, selectedOption }) => {
         };
     });
 
+    const gap = '    ';
+
+    const length = (item.option).length * 12;
+    console.log(length);
+
 
 
     return (
         <View style={styles.progressBar}>
-            {isSelected ?
-                <Animated.View
-                    style={[
-                        styles.progress,
-                        {
-                            height: heightPixel(40),
-                            backgroundColor: isSelected ? Colors.greyMessage : Colors.white,
-                        },
-                        containerLeftStyle
-                    ]}
-                />
-                :
-                ''
-            }
-            <Text style={[
-                styles.optionTxt,
-                {
-                    position: isSelected ? 'absolute' : 'relative',
-                    paddingTop: pixelSizeVertical(10),
-                    paddingLeft: isSelected ? pixelSizeVertical(10) : ''
+            <View style={styles.progressCont}>
+                {isSelected ?
+                    <Animated.View
+                        style={[
+                            styles.progress,
+                            {
+                                height: heightPixel(40),
+                                backgroundColor: isSelected ? Colors.greyMessage : Colors.white,
+                            },
+                            containerLeftStyle
+                        ]}
+                    />
+                    :
+                    ''
                 }
-            ]}>
-                {item.option}
-            </Text>
-            {item === selectedOption ?
-                <Ionicons
-                    name="checkmark-circle"
-                    size={24}
-                    color={Colors.green}
-                    style={styles.selectedIcon}
-                />
-                :
-                ''
-            }
+                <Text style={[
+                    styles.optionTxt,
+                    {
+                        position: isSelected ? 'absolute' : 'relative',
+                        top: item === selectedOption ? pixelSizeVertical(8) : pixelSizeVertical(8),
+                        marginBottom: item === selectedOption ? pixelSizeVertical(10) : '',
+                        paddingLeft: isSelected ? pixelSizeVertical(10) : '',
+                        marginRight: isSelected ? pixelSizeVertical(10) : '',
+                    }
+                ]}>
+                    {item.option} {gap}
+                </Text>
+                {item === selectedOption ?
+                        <Ionicons
+                            name="checkmark-circle"
+                            size={24}
+                            color={Colors.green}
+                            style={[styles.selectedIcon,  { left: pixelSizeHorizontal(length), marginBottom: pixelSizeVertical(5) }]}
+                        />
+                        :
+                        ''
+                    }
+            </View>
+
+
             {isSelected ?
                 <View style={styles.percentageCont}>
                     <Text style={styles.percentageTxt}>{item.percentage}%</Text>
