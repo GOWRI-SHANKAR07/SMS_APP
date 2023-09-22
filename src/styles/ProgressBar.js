@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors, pixelSizeHorizontal, pixelSizeVertical } from "../Constants/Theme";
-import { center } from "@shopify/react-native-skia";
+import { Colors, heightPixel, pixelSizeHorizontal, pixelSizeVertical, widthPixel } from "../Constants/Theme";
 
 const styles = StyleSheet.create({
     container: {
@@ -34,6 +33,7 @@ const styles = StyleSheet.create({
     optionTxt: {
         fontFamily: 'Montserrat-Medium',
         color: Colors.green,
+        height: heightPixel(28),
     },
     voteCont: {
         flexDirection: 'row',
@@ -43,11 +43,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     selectedIcon: {
-        marginLeft: pixelSizeHorizontal(55),
-        top: pixelSizeVertical(5)
+        position: 'absolute',
+        height: heightPixel(27)
     },
     voteTxt: {
         fontFamily: 'Montserrat-Medium'
+    },
+    progressCont: {
+        width: widthPixel(300),
+        justifyContent: "center",
     }
 });
 
